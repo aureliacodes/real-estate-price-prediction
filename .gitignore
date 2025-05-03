@@ -1,0 +1,46 @@
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+*.env
+
+# --- dotenv config files ---
+.env
+
+# --- VS Code / PyCharm / IDE ---
+.vscode/
+.idea/
+
+# --- OS system files ---
+.DS_Store
+Thumbs.db
+
+# Ignoră fișierul de predicții generat de script
+data/predictions.csv
+
+# Ignoră modelul salvat generat de script
+model/linear_model.pkl
+
+
+# --- Logs / temporary output ---
+*.log
+*.tmp
+*.out
+
+# --- Packages ---
+*.egg-info/
+dist/
+build/
+
+# --- Misc ---
+*.bak
