@@ -3,7 +3,7 @@ Jupyter-Server==2.15.0
 Matplotlib==3.10.1
 Numpy==2.2.4
 Pandas==2.2.3
-Python-dotenv==1.1.01
+Python-dotenv==1.1.0
 Scikit-learn==1.6.1
 SQLAlchemy==2.0.40
 Seaborn==0.13.2
