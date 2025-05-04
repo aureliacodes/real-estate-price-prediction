@@ -21,6 +21,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: List files
+      run: ls -R scripts
+    - name: Test Python script
+      run: python -m py_compile scripts/insert_data.py
+    - name: Debug dependencies
+      run: pip freeze
     - name: Run Python script
       run: |
         echo "Running Python app!"
