@@ -47,7 +47,7 @@ model.fit(X_train, y_train)
 # 7. Evaluate the model
 y_pred = model.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
-print(f"✅ Model trained. Mean Squared Error on test set: {mse:.2f}")
+print(f"Model trained. Mean Squared Error on test set: {mse:.2f}")
 
 # 8. Read the test file (where SalePrice is missing)
 test_file = "data/test.csv"
@@ -67,14 +67,14 @@ if os.path.exists(test_file):
         # 12. Save predictions
         output_file = "data/predictions.csv"
         test_df.to_csv(output_file, index=False)
-        print(f"✅ Predictions saved to '{output_file}'.")
+        print(f"Predictions saved to '{output_file}'.")
 
     else:
         missing_cols = list(set(features) - set(test_df.columns))
-        print(f"❌ Missing required columns in 'test.csv': {missing_cols}")
+        print(f" Missing required columns in 'test.csv': {missing_cols}")
 
 else:
-    print("❌ File 'data/test.csv' not found.")
+    print("File 'data/test.csv' not found.")
 
 # Creează folderul 'model' dacă nu există
 os.makedirs("model", exist_ok=True)
@@ -83,4 +83,4 @@ os.makedirs("model", exist_ok=True)
 with open("model/linear_model.pkl", "wb") as f:
     pickle.dump(model, f)
 
-print("✅ Model saved as 'model/linear_model.pkl'")
+print("Model saved as 'model/linear_model.pkl'")
