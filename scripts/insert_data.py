@@ -2,7 +2,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 import os
-
+import sys
+db_url = None
 load_dotenv() 
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
@@ -11,7 +12,7 @@ DB_NAME = os.getenv("DB_NAME")
 DB_PORT = os.getenv("DB_PORT")
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
-    db_url = DATABASE_URL   
+    db_url = DATABASE_URL 
 else:
     db_url = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

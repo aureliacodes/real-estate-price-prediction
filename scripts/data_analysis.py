@@ -2,9 +2,21 @@ import pandas as pd
 from sqlalchemy import create_engine
 import matplotlib.pyplot as plt
 import seaborn as sns
+from dotenv import load_dotenv
+import os
 
-# Database connection parameters
-db_url = 'mysql+pymysql://user_py:RootPass_123@localhost:3306/real_estate'
+load_dotenv() 
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_PORT = os.getenv("DB_PORT")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL:
+    db_url = DATABASE_URL 
+else:
+    db_url = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    
 query = "SELECT * FROM properties"
 
 try:
