@@ -3,7 +3,6 @@ Jupyter-Server==2.15.0
 Matplotlib==3.10.1
 Numpy==2.2.4
 Pandas==2.2.3
-Pickle
 Python-dotenv==1.1.01
 Scikit-learn==1.6.1
 SQLAlchemy==2.0.40
