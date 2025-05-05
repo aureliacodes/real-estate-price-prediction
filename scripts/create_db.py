@@ -1,7 +1,12 @@
+"""
+Script to create a MySQL database and table for real estate data.
+"""
+
+import os
+
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
-import os
 
 # Load environment variables from .env file
 load_dotenv()
@@ -9,16 +14,17 @@ DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
 DB_NAME = os.getenv("DB_NAME", "real_estate")
-DB_PORT = os.getenv("DB_PORT", "3306")
+DB_PORT = int(os.getenv("DB_PORT", "3306"))
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Build database URLs: one without the DB, one with the DB
 if DATABASE_URL:
-    db_url_no_db = DATABASE_URL.rsplit('/', 1)[0]  # remove db name if present
+    db_url_no_db = DATABASE_URL.rsplit("/", 1)[0]
 else:
     db_url_no_db = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}"
 
-db_url_with_db = f"{db_url_no_db}/{DB_NAME}"
+DB_URL_WITH_DB = f"{db_url_no_db}/{DB_NAME}"
+
 
 try:
     # Step 1: Connect to MySQL server and create database if it doesn't exist
@@ -26,14 +32,22 @@ try:
     with engine.connect() as connection:
         print("Connected to MySQL server successfully.")
         print(f"Creating database '{DB_NAME}' if it doesn't exist...")
-        connection.execute(text(f"CREATE DATABASE IF NOT EXISTS {DB_NAME} DEFAULT CHARACTER SET utf8mb4;"))
+        connection.execute(
+            text(
+                f"CREATE DATABASE IF NOT EXISTS {DB_NAME} DEFAULT CHARACTER SET utf8mb4;"
+            )
+        )
 
     # Step 2: Connect to the 'real_estate' database and create the table
-    engine_real_estate = create_engine(db_url_with_db, connect_args={"connect_timeout": 15})
+    engine_real_estate = create_engine(
+        DB_URL_WITH_DB, connect_args={"connect_timeout": 15}
+    )
     with engine_real_estate.connect() as connection:
         print(f"Connected to database '{DB_NAME}' successfully.")
         print("Creating table 'properties' if it doesn't exist...")
-        connection.execute(text("""
+        connection.execute(
+            text(
+                """
 CREATE TABLE IF NOT EXISTS properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
     MSSubClass INT,
@@ -117,12 +131,15 @@ CREATE TABLE IF NOT EXISTS properties (
     SaleCondition VARCHAR(255),
     SalePrice FLOAT
 );
-        """))
+        """
+            )
+        )
         print("Table 'properties' created or already exists.")
 
 except SQLAlchemyError as err:
     print(f"!!! SQLAlchemy Error: {err}")
-except Exception as e:
-    print(f"!!! An unexpected error occurred: {type(e).__name__}: {e}")
+except Exception as e:  # pylint: disable=broad-exception-caught
+    print(f"!!! Unexpected error: {type(e).__name__}: {e}")
+
 finally:
     print("Script finished successfully.")
