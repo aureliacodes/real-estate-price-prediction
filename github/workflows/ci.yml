@@ -1,0 +1,36 @@
+name: CI - Python Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies with conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: environment.yml
+          auto-activate-base: false
+
+      - name: Install additional test tools
+        run: |
+          conda install pytest black -y
+
+      - name: Run Black (code style check)
+        run: black --check .
+
+      - name: Run Tests
+        run: pytest

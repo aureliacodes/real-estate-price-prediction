@@ -29,8 +29,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 QUERY = "SELECT * FROM properties"
 
 # Define database connection string
-DB_URL = (DATABASE_URL if DATABASE_URL
-           else f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
+DB_URL = (
+    DATABASE_URL
+    if DATABASE_URL
+    else f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
 
 try:
     # Establish connection and read data
@@ -55,7 +58,9 @@ try:
         """Analyzes missing values in the dataset."""
         missing_values = dataframe.isnull().sum()
         missing_percent = (missing_values / len(dataframe)) * 100
-        return pd.DataFrame({"Missing Count": missing_values, "Missing Percent": missing_percent})
+        return pd.DataFrame(
+            {"Missing Count": missing_values, "Missing Percent": missing_percent}
+        )
 
     print("\nMissing Values Analysis:")
     print(analyze_missing_values(df))
@@ -72,9 +77,13 @@ try:
     # Correlation analysis
     numeric_df = df.select_dtypes(include=["number"])
     correlation_matrix = numeric_df.corr()
-    corr_filtered = correlation_matrix.where(
-        (correlation_matrix.abs() > 0.5) & (correlation_matrix.abs() < 1.0)
-    ).dropna(how="all").dropna(axis=1, how="all")
+    corr_filtered = (
+        correlation_matrix.where(
+            (correlation_matrix.abs() > 0.5) & (correlation_matrix.abs() < 1.0)
+        )
+        .dropna(how="all")
+        .dropna(axis=1, how="all")
+    )
 
     print("\nCorrelation Analysis (0.5 < |r| < 1.0):")
     print(corr_filtered)
@@ -90,7 +99,9 @@ try:
         iqr = q3 - q1
         lower_bound = q1 - 1.5 * iqr
         upper_bound = q3 + 1.5 * iqr
-        return dataframe[(dataframe[column] < lower_bound) | (dataframe[column] > upper_bound)]
+        return dataframe[
+            (dataframe[column] < lower_bound) | (dataframe[column] > upper_bound)
+        ]
 
     numeric_cols = df.select_dtypes(include=["float64", "int64"]).columns
     for col in numeric_cols:
@@ -98,7 +109,14 @@ try:
         print(f"\nOutliers in {col}: {len(outliers)}")
 
     # Verify required columns exist
-    required_cols = ["SalePrice", "GrLivArea", "YrSold", "YearBuilt", "Neighborhood", "MoSold"]
+    required_cols = [
+        "SalePrice",
+        "GrLivArea",
+        "YrSold",
+        "YearBuilt",
+        "Neighborhood",
+        "MoSold",
+    ]
     missing_cols = [col for col in required_cols if col not in df.columns]
 
     if missing_cols:
@@ -114,9 +132,11 @@ try:
     print(df[["YearBuilt", "YrSold", "property_age"]].head())
 
     # Aggregations
-    grouped_data = numeric_df.groupby("Neighborhood").agg(
-        {"SalePrice": ["mean", "max", "min"], "GrLivArea": "mean"}
-    ).sort_values(("SalePrice", "mean"), ascending=False)
+    grouped_data = (
+        numeric_df.groupby("Neighborhood")
+        .agg({"SalePrice": ["mean", "max", "min"], "GrLivArea": "mean"})
+        .sort_values(("SalePrice", "mean"), ascending=False)
+    )
 
     print("\nGrouped Analysis by Neighborhood:")
     print(grouped_data)

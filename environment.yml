@@ -3,13 +3,12 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
-  - jupyterlab=4.4.0
-  - jupyter-server=2.15.0
   - matplotlib=3.10.1
   - numpy=2.2.4
   - pandas=2.2.3
   - pymysql=1.1.0
-  - python-dotenv=1.1.0
+  - pytest 
+  - python-dotenv
   - scikit-learn=1.6.1
   - scipy=1.15.2
   - seaborn=0.13.2
