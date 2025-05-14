@@ -1,4 +1,3 @@
-
 name: Run Pytest
 
 on:
@@ -12,21 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
     - name: Set up Miniconda
       uses: conda-incubator/setup-miniconda@v3
       with:
         environment-file: environment.yml
-        auto-activate-base: true  # activare automată
+        auto-activate-base: true
+        activate-environment: base  # Asigură activarea mediului corect
+
     - name: Check active environment
       run: conda info
 
-    - name: Verifică instalarea pytest
-      run: conda list | grep pytest
+    - name: Install dependencies (including pytest)
+      run: conda install -c conda-forge --file environment.yml
 
+    - name: Verify pytest installation
+      run: conda list | grep pytest || echo "Pytest not found!"
 
     - name: Run tests with pytest
       run: |
+        source activate base  # Activare explicită a mediului
         export PYTHONPATH=.
         pytest
