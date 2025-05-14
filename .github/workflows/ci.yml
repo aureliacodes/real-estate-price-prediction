@@ -19,6 +19,8 @@ jobs:
       with:
         environment-file: environment.yml
         auto-activate-base: true  # activare automată
+    - name: Check active environment
+      run: conda info
 
     - name: Verifică instalarea pytest
       run: conda list | grep pytest
