@@ -1,13 +1,14 @@
 name: real-estate-price-prediction
 channels:
-  - conda-forge
+  - defaults  # Adăugat canalul defaults
+  - conda-forge  # Canale suplimentare (dacă ai nevoie)
 dependencies:
   - python=3.10
   - matplotlib=3.8.4
   - numpy=1.26.4
   - pandas=2.2.2
   - pymysql=1.1.0
-  - pytest 
+  - pytest
   - python-dotenv
   - scikit-learn=1.4.2
   - scipy=1.13.1
