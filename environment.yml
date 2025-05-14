@@ -1,4 +1,4 @@
-name: real-estate-price-prediction
+name: real_estate_price_prediction  # Evită caractere speciale în nume
 channels:
   - defaults
   - conda-forge
